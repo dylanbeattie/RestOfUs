@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>RestOfUs</title>
+</head>
+<body>
+    <header>
+        @if (User.Identity.IsAuthenticated) {
+            @User.Identity.Name
+            <text>&bull;</text>
+            <a href="@Url.Action("account", "home")">my account</a>
+            <text>&bull;</text>
+            <a href="@Url.Action("signout", "home")">sign out</a>
+        } else {
+            <a href="@Url.Action("signin", "home")">sign in</a>
+        }
+
+    </header>
+    <section>
+        @RenderBody()
+    </section>
+    <footer></footer>
+</body>
+</html>
