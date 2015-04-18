@@ -1,0 +1,12 @@
+﻿@model RelyingAppDemo.OAuth2.OAuth2Tokens
+<h1>It worked! Here are your tokens:</h1>
+<dl>
+    <dt>access_token:</dt>
+    <dd>@Model.AccessToken</dd>
+    <dt>refresh_token:</dt>
+    <dd>@Model.RefreshToken</dd>
+    <dt>Token Type:</dt>
+    <dd>@Model.TokenType</dd>
+    <dt>Lifespan:</dt>
+    <dd>@Model.ExpiresIn seconds</dd>
+</dl>

@@ -1,0 +1,27 @@
+﻿@using RestOfUs.Web.OAuth2
+@model RestOfUs.Web.Models.RedirectViewModel
+
+@{
+    ViewBag.Title = "title";
+}
+<h2>Redirecting you back to the client application</h2>
+<p>Here's what's happened so far:</p>
+<ol>
+    <li>
+        <strong>@Model.Client.Name</strong> has requested access to:
+        <ul>
+            @foreach (var scope in Model.Authorization.Scope) {
+                <li>@Scope.Describe(scope)</li>
+            }
+        </ul>
+    </li>
+    <li>You've told us you're happy with this.</li>
+    <li>We've recorded your authorization using the unique code @Model.Authorization.Code</li>
+</ol>
+<p>Now, we're redirecting you back to the <code>redirect_uri</code> supplied by <strong>@Model.Client.Name</strong>, and including this code in the redirect URI.</p>
+<p>
+    <strong>@Model.Client.Name</strong> will then make a request back to the RestOfUs server and exchange this code for an <strong>access token</strong>
+    and a <strong>refresh token</strong>
+</p>
+<p>Once that's all clear, go here to continue:</p>
+<p><a href="@Model.RedirectUri.AbsoluteUri">@Model.RedirectUri.AbsoluteUri</a></p>

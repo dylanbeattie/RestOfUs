@@ -126,10 +126,13 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OAuth2Controller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AuthorizeScopesViewModel.cs" />
     <Compile Include="Models\SignInViewModel.cs" />
+    <Compile Include="OAuth2\Scopes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IAuthenticator.cs" />
   </ItemGroup>
@@ -179,6 +182,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Styles\styles.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\OAuth2\Authorize.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\OAuth2\Redirect.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

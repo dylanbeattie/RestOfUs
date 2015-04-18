@@ -1,4 +1,5 @@
 using System.Web.Mvc;
+using RestOfUs.Common.Services;
 using RestOfUs.Services;
 using RestOfUs.Web.Models;
 using RestOfUs.Web.Services;
@@ -38,7 +39,8 @@ namespace RestOfUs.Web.Controllers {
             if (user == null) return (SignIn(returnUrl, "Username not found"));
             if (user.PasswordMatches(password)) {
                 authenticator.SetAuthCookie(username, remember);
-                return (RedirectToAction("Index", "Account"));
+                var url = returnUrl ?? Url.Action("Index", "Account");
+                return (Redirect(url));
             }
             return (SignIn(returnUrl, "Incorrect password"));
         }

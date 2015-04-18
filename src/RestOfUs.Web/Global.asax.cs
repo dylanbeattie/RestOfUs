@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using LightInject;
+using RestOfUs.Common.Services;
 using RestOfUs.Services;
 using RestOfUs.Web.Services;
 
@@ -24,6 +25,7 @@ namespace RestOfUs.Web {
             container.RegisterControllers();
             container.Register<IUserStore, FakeUserStore>();
             container.Register<IAuthenticator, FormsAuthenticator>();
+            container.Register<IOAuth2DataStore, FakeIoAuth2DataStore>();
             container.EnableMvc();
         }
 

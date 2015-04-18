@@ -1,0 +1,11 @@
+﻿@model Uri
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>authorize</h2>
+<p>To sign in with restofus, you need to go to</p>
+<p><a href="@Model.AbsoluteUri">@Model.AbsoluteUri</a></p>
+<p>In a real OAuth2 flow, we wouldn't show you this page - we'd just redirect you straight away.</p>
+

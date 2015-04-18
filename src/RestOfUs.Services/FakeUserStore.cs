@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using RestOfUs.Common.Entities;
+using RestOfUs.Common.Services;
 
 namespace RestOfUs.Services {
     public class FakeUserStore : IUserStore {

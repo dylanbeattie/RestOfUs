@@ -1,0 +1,22 @@
+﻿@using RestOfUs.Web.OAuth2
+@model RestOfUs.Web.Models.AuthorizeScopesViewModel
+
+@{
+    ViewBag.Title = "Authorize a Thing!";
+}
+
+
+<form action="@Url.Action("Redirect", "OAuth2")" method="POST">
+    <h1>hello, @Model.Username</h1>
+    <h2>@Model.ClientAppName would like to:</h2>
+    <ul>
+        @foreach (var scope in Model.Scopes) {
+            <li>@Scope.Describe(scope)</li>
+        }
+    </ul>
+    <input type="hidden" name="redirect_uri" value="@Model.RedirectUri" />
+    <input type="hidden" name="scope" value="@String.Join(" ", Model.Scopes)" />
+    <input type="hidden" name="client_id" value="@Model.ClientId" />
+    <input type="hidden" name="state" value="@Model.State" />
+    <input type="submit" value="I'm OK with this!" />
+</form>
