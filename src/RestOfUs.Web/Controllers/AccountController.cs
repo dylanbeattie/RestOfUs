@@ -1,5 +1,6 @@
 using System.Web.Mvc;
 using RestOfUs.Services;
+using RestOfUs.Web.Models;
 using RestOfUs.Web.Services;
 
 namespace RestOfUs.Web.Controllers {
@@ -16,26 +17,30 @@ namespace RestOfUs.Web.Controllers {
 
         [AllowAnonymous]
         [AcceptVerbs(HttpVerbs.Get)]
-        public ActionResult SignIn(string message = "Please log in") {
-            ViewBag.Message = message;
-            return (View());
+        public ActionResult SignIn(string returnUrl, string message) {
+            message = message ?? "Please sign in";
+            var model = new SignInViewModel {
+                Message = message,
+                ReturnUrl = returnUrl
+            };
+            return (View(model));
         }
 
         public ActionResult SignOut() {
             authenticator.SignOut();
-            return (RedirectToAction("Index"));
+            return (RedirectToAction("Index", "Home"));
         }
 
         [AllowAnonymous]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult SignIn(string username, string password, bool remember = false) {
+        public ActionResult SignIn(string username, string password, string returnUrl, bool remember = false) {
             var user = userStore.FindUserByUsername(username);
-            if (user == null) return (SignIn("Username not found"));
+            if (user == null) return (SignIn(returnUrl, "Username not found"));
             if (user.PasswordMatches(password)) {
                 authenticator.SetAuthCookie(username, remember);
                 return (RedirectToAction("Index", "Account"));
             }
-            return (SignIn("Incorrect password"));
+            return (SignIn(returnUrl, "Incorrect password"));
         }
 
         public ActionResult Index() {

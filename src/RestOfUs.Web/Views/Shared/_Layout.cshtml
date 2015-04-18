@@ -2,23 +2,27 @@
 <html>
 <head>
     <title>RestOfUs</title>
+    <link type="text/css" rel="stylesheet" href="@Url.Content("~/Content/Styles/styles.css")" />
 </head>
 <body>
     <header>
         @if (User.Identity.IsAuthenticated) {
             @User.Identity.Name
             <text>&bull;</text>
-            <a href="@Url.Action("account", "home")">my account</a>
+            <a href="@Url.Action("index", "account")">my account</a>
             <text>&bull;</text>
-            <a href="@Url.Action("signout", "home")">sign out</a>
+            <a href="@Url.Action("signout", "account")">sign out</a>
         } else {
-            <a href="@Url.Action("signin", "home")">sign in</a>
+            <a href="@Url.Action("signin", "account")">sign in</a>
         }
 
     </header>
     <section>
         @RenderBody()
     </section>
-    <footer></footer>
+    <footer>
+        restofus &bull; a ReST demo application by @@dylanbeattie &bull; <a href="http://www.github.com/dylanbeattie/restofus">http://www.github.com/dylanbeattie/restofus</a>
+
+    </footer>
 </body>
 </html>

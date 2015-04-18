@@ -1,14 +1,19 @@
 ﻿@model dynamic
-
-@{
-    ViewBag.Title = "title";
-}
-
-<h2>Sign In</h2>
-<form action="@Url.Action("SignIn", "Home")" method="POST">
-    <p>@ViewBag.Message</p>
-    <label for="username-input">Username:</label> <input type="text" name="username" id="username-input" />
-    <label for="password-input">Password:</label> <input type="text" name="password" id="password-input" />
-    <input type="checkbox" name="remember" id="remember-checkbox" />
-    <input type="submit" />
+<h1>Sign In</h1>
+<form action="@Url.Action("SignIn", "Account")" method="POST" id="signin-form">
+    <p>@Model.Message</p>
+    <p>
+        <label for="username-input">Username:</label> <input type="text" name="username" id="username-input" />
+    </p>
+    <p>
+        <label for="password-input">Password:</label> <input type="text" name="password" id="password-input" />
+    </p>
+    <p>
+        <label for="remember-checkbox">
+            <input type="checkbox" name="remember" id="remember-checkbox" />
+            remember me?
+        </label>
+        <input type="submit" />
+    </p>
+    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
 </form>

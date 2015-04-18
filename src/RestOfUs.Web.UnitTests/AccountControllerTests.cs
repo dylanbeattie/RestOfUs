@@ -8,6 +8,7 @@ using Moq;
 using NUnit.Framework;
 using RestOfUs.Services;
 using RestOfUs.Web.Controllers;
+using RestOfUs.Web.Models;
 using RestOfUs.Web.Services;
 using Shouldly;
 
@@ -23,7 +24,7 @@ namespace RestOfUs.Web.UnitTests {
             var fakeUserStore = new FakeUserStore();
             var controller = new AccountController(fakeUserStore, mockAuthenticator.Object);
             mockAuthenticator.Setup(auth => auth.SetAuthCookie(username, remember)).Verifiable();
-            controller.SignIn(username, password, remember);
+            controller.SignIn(username, password, null, remember);
             mockAuthenticator.Verify();
         }
 
@@ -36,10 +37,10 @@ namespace RestOfUs.Web.UnitTests {
             var controller = new AccountController(fakeUserStore, mockAuthenticator.Object);
             mockAuthenticator.Setup(auth => auth.SetAuthCookie(It.IsAny<string>(), It.IsAny<bool>()))
                 .Callback(() => Assert.Fail("Non-existent username should not set auth cookie"));
-            var result = controller.SignIn(username, password) as ViewResult;
+            var result = controller.SignIn(username, password, null, remember) as ViewResult;
             result.ShouldNotBe(null);
             mockAuthenticator.Verify();
-            ((string)result.ViewBag.Message).ShouldBe("Username not found");
+            ((SignInViewModel)result.Model).Message.ShouldBe("Username not found");
         }
 
 
@@ -52,10 +53,21 @@ namespace RestOfUs.Web.UnitTests {
             var controller = new AccountController(fakeUserStore, mockAuthenticator.Object);
             mockAuthenticator.Setup(auth => auth.SetAuthCookie(It.IsAny<string>(), It.IsAny<bool>()))
                 .Callback(() => Assert.Fail("Incorrect password should not set auth cookie"));
-            var result = controller.SignIn(username, password) as ViewResult;
+            var result = controller.SignIn(username, password, null, remember) as ViewResult;
             result.ShouldNotBe(null);
             mockAuthenticator.Verify();
-            ((string)result.ViewBag.Message).ShouldBe("Incorrect password");
+            ((SignInViewModel)result.Model).Message.ShouldBe("Incorrect password");
+        }
+
+        [Test]
+        public void Login_Works_With_Supplied_ReturnUrl() {
+            var mockAuthenticator = new Mock<IAuthenticator>();
+            var fakeUserStore = new FakeUserStore();
+            var controller = new AccountController(fakeUserStore, mockAuthenticator.Object);
+            var result = controller.SignIn("/foo/bar", null) as ViewResult;
+            result.ShouldNotBe(null);
+            mockAuthenticator.Verify();
+            ((SignInViewModel)result.Model).ReturnUrl.ShouldBe("/foo/bar");
         }
     }
 }
