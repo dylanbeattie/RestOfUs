@@ -54,8 +54,8 @@ namespace RestOfUs.Web.Controllers {
             var authorization = oAuth2DataStore.FindAuthorization(code);
             if (authorization == null) throw (BadRequest("invalid authorization code"));
             if (authorization.Expired) throw (BadRequest("authorization no longer valid"));
-
             var refreshToken = authorization.CreateRefreshToken();
+            
         }
 
         public ActionResult Redirect(string response_type, string client_id, string redirect_uri, string state,

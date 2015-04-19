@@ -17,12 +17,17 @@ namespace RestOfUs.Common.Entities.OAuth2 {
         }
     }
 
-    public class RefreshToken {
-        public string Token { get; set; }
+    public abstract class OAuth2Token {
         public string ClientId { get; set; }
         public string Username { get; set; }
         public string[] Scopes { get; set; }
         public DateTimeOffset ExpiresAt { get; set; }
+    }
+
+    public class AccessToken : OAuth2Token { }
+
+    public class RefreshToken : OAuth2Token {
+        public string Token { get; set; }
         public DateTimeOffset? RevokedAt { get; set; }
     }
 
